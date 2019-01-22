@@ -1,0 +1,16 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: deck
+  namespace: spinnaker
+  annotations:
+    ingress.kubernetes.io/app-root: /spin
+    ingress.kubernetes.io/ssl-redirect: false
+spec:
+  rules:
+  - http:
+      paths:
+      - path: /spin
+        backend:
+          serviceName: spin-deck
+          servicePort: 9000
