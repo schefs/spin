@@ -15,27 +15,25 @@ Start Halyard in a new Docker container.
 The following command creates the Halyard Docker container, mounting the Halyard config directory:
 
     $ mkdir ~/.hal
+    $
+    $ # On Linux machine:
     $ docker run -p 8084:8084 -p 9000:9000 \
         --name halyard --rm \
         -v ~/.hal:/home/spinnaker/.hal \
         -v ${HOME}/.kube/config:/home/spinnaker/.kube/config \
         -d \
         gcr.io/spinnaker-marketplace/halyard:1.13.1
+    $
+    $ # On Windows machine:
+    $ docker run -p 8084:8084 -p 9000:9000 \
+    $   --name halyard --rm \
+    $   -v /c/Users/Eyal/.hal/:/home/spinnaker/.hal \
+    $   -v  /c/Users/Eyal/.kube:/home/spinnaker/.kube \
+    $   -d   gcr.io/spinnaker-marketplace/halyard:1.13.1
+    $
     $ docker exec -it halyard bash
     $ source <(hal --print-bash-completion)
 
-                                        <!-- on windows:
-                                            docker run -p 8084:8084 -p 9000:9000 \
-                                            --name halyard --rm \
-                                            -v /c/Users/Eyal/.hal/:/home/spinnaker/.hal \
-                                            -v  /c/Users/Eyal/.kube:/home/spinnaker/.kube \
-                                            -d   gcr.io/spinnaker-marketplace/halyard:1.13.1 -->
-<!-- on windows PowerShell:
-        docker run -p 8084:8084 -p 9000:9000 \
-         --name halyard -u 1000:1000 --rm \
-         -v C:\Users\Eyal\.hal\:/home/spinnaker/.hal \
-         -v  C:\Users\Eyal\.kube:/home/spinnaker/.kube \
-         -d   gcr.io/spinnaker-marketplace/halyard:1.13.1 -->
 #### Set Kubernetes provider v2.0
 
     $ hal config provider kubernetes enable
