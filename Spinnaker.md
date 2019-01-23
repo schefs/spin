@@ -45,10 +45,12 @@ The following command creates the Halyard Docker container, mounting the Halyard
 
 #### Set service account auth (not mandatory)
 
-    # Assign spinnaker k8s service account and RBAC roles
+Assign spinnaker k8s service account and RBAC roles
+
     $ kubectl apply -f  /home/spinnaker/.hal/RBAC.yaml
 
-    # Modify the existing kubectl context adding the new service account token
+Modify the existing kubectl context adding the new service account token
+
     $ TOKEN=$(kubectl get secret --context $CONTEXT \
         $(kubectl get serviceaccount spinnaker-service-account \
             --context $CONTEXT \
@@ -58,16 +60,15 @@ The following command creates the Halyard Docker container, mounting the Halyard
         -o jsonpath='{.data.token}' | base64 --decode)
     $ kubectl config set-credentials ${CONTEXT}-token-user --token $TOKEN
 
-    # Switching to the new service account credentials
+Switching to the new service account credentials
+
     $ kubectl config set-context $CONTEXT --user ${CONTEXT}-token-user
 
 #### Create new provider account
 
-    # Create the new provider account
     $ export ACCOUNT=schef
     $ hal config provider kubernetes account add $ACCOUNT --provider-version v2 --docker-registries [] --service-account true
     $ hal config features edit --artifacts true
-
 
 #### Spinnaker set distributed install on k8s
 
@@ -75,7 +76,8 @@ The following command creates the Halyard Docker container, mounting the Halyard
 
 #### Set s3 bucket as storage back-end
 
-    # NOTE: do not supply the value of --secret-access-key on the command line, you will be prompted to enter the value on STDIN once the command has started running
+NOTE: do not supply the value of --secret-access-key on the command line, you will be prompted to enter the value on STDIN once the command has started running
+
     $ export REGION=us-east-2
     $ export SPIN_S3_BUCKET=my_bucket_uniq_name
     $ export YOUR_SECRET_KEY_ID=bla-bla-bla
@@ -96,6 +98,13 @@ The following command creates the Halyard Docker container, mounting the Halyard
 
     # Deploy
     $ hal deploy apply
+
+#### Connect to Deck
+
+    $ hal deploy connect
+    # or
+    $ kubectl.exe port-forward -n spinnaker service/spin-deck 9000
+    $ kubectl.exe port-forward -n spinnaker service/spin-gate 8084
 
 #### Backup Halyard
 
