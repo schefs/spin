@@ -4,13 +4,14 @@ metadata:
   name: deck
   namespace: spinnaker
   annotations:
-    ingress.kubernetes.io/app-root: /spin
-    ingress.kubernetes.io/ssl-redirect: false
+    #nginx.ingress.kubernetes.io/rewrite-target: /
+    #nginx.ingress.kubernetes.io/ssl-redirect: "false"
+    #nginx.ingress.kubernetes.io/app-root: /
 spec:
   rules:
   - http:
       paths:
-      - path: /spin
+      - path: /
         backend:
           serviceName: spin-deck
           servicePort: 9000
