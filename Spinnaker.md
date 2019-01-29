@@ -67,7 +67,7 @@ Switching to the new service account credentials
 #### Create new provider account
 
     $ export ACCOUNT=schef
-    $ hal config provider kubernetes account add $ACCOUNT --provider-version v2 --docker-registries [] --service-account true
+    $ hal config provider kubernetes account add $ACCOUNT --provider-version v2 --docker-registries [] --context $CONTEXT --service-account true
     $ hal config features edit --artifacts true
 
 #### Spinnaker set distributed install on k8s
@@ -99,6 +99,17 @@ NOTE: do not supply the value of --secret-access-key on the command line, you wi
     # Deploy
     $ hal deploy apply
 
+#### Expose through ingress
+
+After creating the Deck&Gate ingress, make sure to configure them to expect traffic on your ingress url.
+
+    hal config security ui edit \
+        --override-base-url http://spinnaker.$DOMAIN
+
+    hal config security api edit \
+        --override-base-url http://spinnaker-api.$DOMAIN
+
+
 #### Connect to Deck
 
     $ hal deploy connect
@@ -115,6 +126,7 @@ Halyard backup config - This includes all secrets you’ve supplied to hal. Keep
 Halyard backup restore on another machine - Halyard will expand & replace the existing ~/.hal directory with the backup.
 
     $ hal backup restore --backup-path <backup-name>.tar
+
 
 
 
