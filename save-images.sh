@@ -1,17 +1,23 @@
 #!/bin/bash
 
+# Cleanup on trap
+cleanup()
+{
+    spin_stop
+    exit 100
+}
+
 # Spinning loading dot
 spin()
 {
-    spinner="/|\\-/|\\-"
-    while :
+    local spinstr='|/-\'
+    while : 
     do
-      for i in `seq 0 7`
-      do
-        echo -n "${spinner:$i:1}"
-        echo -en "\010"
-        sleep 0.5
-      done
+        local temp=${spinstr#?}
+        printf " [%c]  " "$spinstr"
+        local spinstr=$temp${spinstr%"$temp"}
+        sleep 0.05
+        printf "\b\b\b\b\b\b"
     done
 }
 
@@ -21,18 +27,17 @@ spin_start()
     spin &
     # Make a note of its Process ID (PID):
     SPIN_PID=$!
-    echo spin pid is $SPIN_PID
 }
 
 # Stop the Spinner
 spin_stop()
 {
-    if [ -n $SPIN_PID ]; then
-        echo killing $SPIN_PID
-        kill -n 9 $SPIN_PID
-        unset SPIN_PID;
+    if [ -z $SPIN_PID ]; then
+    echo "Spinner is already down...";    
     else
-    echo "nothing to kill...";
+        #echo killing Spinner $SPIN_PID
+        kill -n 9 $SPIN_PID &> /dev/null
+        unset SPIN_PID;
     fi
 }
 
@@ -81,7 +86,9 @@ save_images()
     do
         image_name=$FILES_PATH$(echo $image| tr /. _|tr : -).tar
         echo "Pulling $image:"
-        docker pull $image
+        spin_start
+        docker pull $image 1> /dev/null
+        spin_stop
         echo "Saving: $image_name"
         spin_start
         docker save -o $image_name $image
@@ -91,12 +98,19 @@ save_images()
 
 main()
 { 
+    
     # Kill the spinner on any signal, including our own exit.
-    trap spin_stop 0 1 2 3 6 9 14 15
+    trap 'echo "Cought trap!" ; cleanup' 1 2 3 6 9 14 15
+
+    # Get images from kubernetes
     get_images
+    
+    # Check if any images found
     if [ $? == 0 ]; then
         list_images
-        save_images
+        save_images;
+    else
+        exit 101;
     fi
 }
 
