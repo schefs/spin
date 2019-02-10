@@ -139,7 +139,3 @@ Halyard backup config - This includes all secrets you’ve supplied to hal. Keep
 Halyard backup restore on another machine - Halyard will expand & replace the existing ~/.hal directory with the backup.
 
     $ hal backup restore --backup-path <backup-name>.tar
-
-
-
-
