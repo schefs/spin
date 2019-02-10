@@ -1,8 +1,19 @@
 # Deploying Spinnaker
 
-## Spinnaker How to Bdila Guide
+## Spinnaker in a air gapped environment Guide
+
+How to setup spinnaker in a air-gapped environment guide
+
+You will need:
+
+* Docker installed
+* Kubectl installed configured to your k8s cluster of choice (so you can install spinnaker inside)
+* privileged access to your kubernetes cluster so you can let spinnaker role your delivery kingdom
+* s3 bucket for spinnaker
 
 ### Halyard
+
+first save halyard docker image to file so you can use it later on offline
 
     docker pull gcr.io/spinnaker-marketplace/halyard:1.13.1
     docker save -o ./halyard-1-13-1.tar  gcr.io/spinnaker-marketplace/halyard:1.13.1
@@ -85,7 +96,8 @@ NOTE: do not supply the value of --secret-access-key on the command line, you wi
         --access-key-id $YOUR_SECRET_KEY_ID \
         --secret-access-key \
         --region ${REGION} \
-        --bucket ${SPIN_S3_BUCKET}
+        --bucket ${SPIN_S3_BUCKET} \
+        --endpoint <alternate endpoint for S3-compatible storage>
     $ hal config storage edit --type s3
 
 #### Deploy
@@ -114,10 +126,10 @@ After creating the Deck&Gate ingress, make sure to configure them to expect traf
 
     $ hal deploy connect
     # or
-    $ kubectl.exe port-forward -n spinnaker service/spin-deck 9000
-    $ kubectl.exe port-forward -n spinnaker service/spin-gate 8084
+    $ kubectl port-forward -n spinnaker service/spin-deck 9000
+    $ kubectl port-forward -n spinnaker service/spin-gate 8084
 
-#### Bdila
+#### Save necessary things for when you go air gapped
 
 save all docker images of spinnaker:
 
