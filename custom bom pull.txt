@@ -1,0 +1,7 @@
+using custom boms:
+https://www.spinnaker.io/guides/operator/custom-boms/
+
+using custom release containers
+https://medium.com/@edwin.a.avalos/updating-spinnaker-halyard-releases-with-custom-containers-373494a532b9
+
+
