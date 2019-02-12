@@ -27,11 +27,14 @@ The following command creates the Halyard Docker container, mounting the Halyard
 
     $ mkdir ~/.hal
 
+You also need to completely disable reads from GCS by setting `spinnaker.config.input.gcs.enabled: false` in /opt/spinnaker/config/halyard-local.yml. We will provide this file with docker volume.
+
 #### On Linux machine
 
     $ docker run -p 8084:8084 -p 9000:9000 \
-        --name halyard --rm \
+        --name halyard \
         -v ~/.hal:/home/spinnaker/.hal \
+        -v ~/halyard-local.yml:/opt/spinanker/config/halyard-local.yml \
         -v ${HOME}/.kube/config:/home/spinnaker/.kube/config \
         -d \
         gcr.io/spinnaker-marketplace/halyard:1.13.1
@@ -39,9 +42,10 @@ The following command creates the Halyard Docker container, mounting the Halyard
 #### On Windows machine
 
     $ docker run -p 8084:8084 -p 9000:9000 \
-       --name halyard --rm \
+       --name halyard \
        -v /c/Users/Eyal/.hal/:/home/spinnaker/.hal \
-       -v  /c/Users/Eyal/.kube:/home/spinnaker/.kube \
+       -v /c/Users/Eyal/halyard-local.yml:/opt/spinanker/config/halyard-local.yml \
+       -v /c/Users/Eyal/.kube:/home/spinnaker/.kube \
        -d   gcr.io/spinnaker-marketplace/halyard:1.13.1
 
 #### Connect to the container
