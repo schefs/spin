@@ -110,7 +110,7 @@ NOTE: do not supply the value of --secret-access-key on the command line, you wi
     $ hal version list
 
     # Configure you desired version
-    $ hal config version edit --version 1.11.8
+    $ hal config version edit --version local:1.11.8
 
     # Deploy
     $ hal deploy apply
