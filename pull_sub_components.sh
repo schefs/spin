@@ -3,8 +3,8 @@
 mkdir -p ./boms/.bom
 cd ./boms/.bom
 
-mkdir ./.bom/echo
-cd ./.bom/echo
+mkdir ./echo
+cd ./echo
 wget https://raw.githubusercontent.com/spinnaker/echo/master/halconfig/echo-scheduler.yml
 wget https://raw.githubusercontent.com/spinnaker/echo/master/halconfig/echo.yml
 wget https://raw.githubusercontent.com/spinnaker/echo/master/halconfig/echo-worker.yml
