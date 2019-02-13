@@ -5,11 +5,11 @@ artifactSources:
   googleImageProject: marketplace-spinnaker-release
 dependencies:
   consul:
-    version: 0.7.5
+    version: local:0.7.5
   redis:
-    version: 2:2.8.4-2
+    version: local:2:2.8.4-2
   vault:
-    version: 0.7.0
+    version: local:0.7.0
 services:
   clouddriver:
     commit: f6836b774769e1d6d11f35ab7bc3319634806247
