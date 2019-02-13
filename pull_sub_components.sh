@@ -61,6 +61,13 @@ mkdir rosco
 cd rosco/
 wget https://raw.githubusercontent.com/spinnaker/rosco/master/halconfig/images.yml
 wget https://raw.githubusercontent.com/spinnaker/rosco/master/halconfig/rosco.yml
+svn checkout https://github.com/spinnaker/rosco/trunk/rosco-web/config/packer
+sudo rm -r ./packer/.svn
+cd ./packer
+wget https://raw.githubusercontent.com/spinnaker/rosco/master/rosco-web/config/rosco.yml
+
+
+echo "DONE !!!!!!!"
 
 
 

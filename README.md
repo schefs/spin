@@ -144,6 +144,7 @@ Pull main BOM:
     $ Curl https://storage.googleapis.com/halconfig/bom/<version>.yml
     $ # Example: https://storage.googleapis.com/halconfig/bom/1.11.8.yml
 
+* install svn - `apt-get install subversion`
 * Run the script to pull services BOM manifests `./pull_sub_components.sh`
 * Make sure you read spinnaker custom bom guide [here](https://www.spinnaker.io/guides/operator/custom-boms), and update services to be searched from local directory and use custom registry.
 
