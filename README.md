@@ -104,6 +104,14 @@ NOTE: do not supply the value of --secret-access-key on the command line, you wi
         --endpoint <alternate endpoint for S3-compatible storage>
     $ hal config storage edit --type s3
 
+#### Remote registries
+
+    $ hal config provider docker-registry enable
+    $ hal config provider docker-registry account add nexus \
+     --address x.x.x.x:xx \
+     --insecure-registry true \
+     --username admin --password
+
 #### Deploy
 
     # List Spinnaker Versions
